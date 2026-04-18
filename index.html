@@ -4,8 +4,19 @@
     <title>Pay Now</title>
 
     <script>
+        function getAmount() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("am") || "0";
+        }
+
         function pay() {
-            window.location.href = "upi://pay?pa=paytmqr2810050501011fqaxn5dn685@paytm&am=29&cu=INR";
+            let amount = getAmount();
+
+            let upi = "paytmqr2810050501011fqaxn5dn685@paytm"; // 👈 apna UPI
+
+            let link = `upi://pay?pa=${upi}&am=${amount}&cu=INR`;
+
+            window.location.href = link;
         }
 
         window.onload = pay;
@@ -17,11 +28,18 @@
     <h2>Redirecting to Payment...</h2>
     <p>If not redirected, click below 👇</p>
 
-    <a href="upi://pay?pa=paytmqr2810050501011fqaxn5dn685@paytm&am=29&cu=INR">
-        <button style="padding:10px 20px; font-size:16px;">
-            Pay Now
-        </button>
-    </a>
+    <script>
+        let amount = new URLSearchParams(window.location.search).get("am") || "0";
+        let upi = "paytmqr2810050501011fqaxn5dn685@paytm";
+
+        document.write(`
+            <a href="upi://pay?pa=${upi}&am=${amount}&cu=INR">
+                <button style="padding:10px 20px; font-size:16px;">
+                    Pay ₹${amount}
+                </button>
+            </a>
+        `);
+    </script>
 
 </body>
 </html>
